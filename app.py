@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import smtplib
+from credentials import creds
 
 app = Flask(__name__)
 
@@ -56,17 +57,21 @@ def question():
             server.starttls()
             server.ehlo()
 
-            server.login("avyukthnilajagi@gmail.com", "Night04Monkey$")
+            server.login(creds['email'], creds['pass'])
 
             msg = f"Subject: {subject}\n\n{body}"
 
-            sender = "avyukthnilajagi@gmail.com"
+            sender = creds['email'] 
             recipients = ["avyukthnilajagi@gmail.com", "tanishka.mehta06@gmail.com"]
            
             for i in range(len(recipients)):
                 server.sendmail(sender, recipients[i], msg)
         
         return render_template('question.html')
+
+@app.route('/apply', methods = ['GET', 'POST'])
+def apply():
+    return render_template('apply.html')
 
 
 if __name__ == '__main__':
