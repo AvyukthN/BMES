@@ -15,6 +15,7 @@ class User(db.Model):
 
     email = db.Column(db.String(120), unique = True, nullable = False)
     password = db.Column(db.String(60),  nullable = False)
+    posts = db.relationship('Post', backref='author', lazy = True)
     
     def __repr__(self):
         return ("User({}, {})".format(self.username, self.email))
@@ -23,15 +24,11 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(100), nullable = False)
     date_posted = db.Column(db.DateTime, nullable = False, default=datetime.utcnow)
-
+    content = db.Column(db.Text, nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     
     def __repr__(self):
-        return f"User({}, {})".format(self.username, self.email)
-
-
-
-def emailer(name, subject, body):
-    print(name, subject, body)
+        return ("Post({}, {}, {})".format(self.title, self.date_posted, self.content))
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -59,11 +56,16 @@ def addPost():
     if request.method == 'POST':
         for key, value in request.form.items():
             if key == 'title':
-                title = value
+                post_title = value
             if key == 'body':
                 body = value
             if key == 'projName':
                 projName = value
+
+        user_post = Post(title = post_title, content = body, user_id = user.id)
+
+        db.session.add(user_post)
+        db.session.commit()
 
         print(title, body, projName)
         return render_template('addPost.html')
