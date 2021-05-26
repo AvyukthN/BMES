@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 style = "margin-left: 5%; margin-top: 2%;">Add Post</h1>
+
+<form style = "margin-left: 5%; margin-top: 2%;" method = "POST">
+	<label>Post Title</label></br>
+	<input name = "title" placeholder = "Post Title" type = "text"></br></br>
+	<label>Post Body</label></br>
+	<input name = "body" placeholder = "Post Body" type = "text"></br></br>
+	<label>Project Name</label></br>
+	<input name = "projName" placeholder = "Project Name" type = "text"></br></br>
+	<input type = "submit">
+</form>
+
+{% endblock %}
