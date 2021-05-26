@@ -1,8 +1,34 @@
 from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 import smtplib
 from credentials import creds
+from datetime import datetime
 
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(20), unique = True, nullable = False)
+
+    email = db.Column(db.String(120), unique = True, nullable = False)
+    password = db.Column(db.String(60),  nullable = False)
+    
+    def __repr__(self):
+        return f"User({}, {})".format(self.username, self.email)
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(100), nullable = False)
+    date_posted = db.Column(db.DateTime, nullable = False, default=datetime.utcnow)
+
+    
+    def __repr__(self):
+        return f"User({}, {})".format(self.username, self.email)
+
+
 
 def emailer(name, subject, body):
     print(name, subject, body)
@@ -72,7 +98,6 @@ def question():
 @app.route('/apply', methods = ['GET', 'POST'])
 def apply():
     return render_template('apply.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
