@@ -17,7 +17,7 @@ class User(db.Model):
     password = db.Column(db.String(60),  nullable = False)
     
     def __repr__(self):
-        return f"User({}, {})".format(self.username, self.email)
+        return ("User({}, {})".format(self.username, self.email))
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
