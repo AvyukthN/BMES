@@ -3,14 +3,20 @@
 
 <h1 style = "margin-left: 5%; margin-top: 2%;">Add Post</h1>
 
-<form style = "margin-left: 5%; margin-top: 2%;" method = "POST">
-	<label>Post Title</label></br>
-	<input name = "title" placeholder = "Post Title" type = "text"></br></br>
-	<label>Post Body</label></br>
-	<input name = "body" placeholder = "Post Body" type = "text"></br></br>
-	<label>Project Name</label></br>
-	<input name = "projName" placeholder = "Project Name" type = "text"></br></br>
-	<input type = "submit">
+<form style = 'margin-left: 5%; margin-top: 2%; margin-right: 5%;' method = "POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Post Title</label>
+    <input type="text" name = "title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Post title">
+  </div></br>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Post Body</label>
+    <input type="text" name = "body" class="form-control" id="exampleInputPassword1" placeholder="Enter your question">
+  </div></br>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Project Name</label>
+    <input type="text" name = "projName" class="form-control" id="exampleInputPassword1" placeholder="Enter the project name">
+  </div></br>
+  <button type="submit" class="btn btn-primary">Add Post</button>
 </form>
 
 {% endblock %}
