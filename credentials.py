@@ -1,2 +1,2 @@
-creds = {'email': 'avyukthnilajagi@gmail.com',
-         'pass': 'Night04Monkey$'}
+creds = {'email': '*NOPE*@gmail.com',
+         'pass': '*NOPE*'}
