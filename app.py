@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 import smtplib
 from credentials import creds
 from datetime import datetime
+import os
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+from dotenv import load_dotenv
+import slack
+from pathlib import Path
 
 app = Flask(__name__)
 
@@ -79,6 +85,36 @@ def question():
         if request.form['subject'] and request.form['body']:
             subject = request.form['subject']
             body = request.form['body']
+            env_path = Path('.') / '.env'
+            load_dotenv(dotenv_path=env_path)
+
+            client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
+
+            response = client.chat_postMessage(
+                    channel = '#questions',
+                    text = '{}\n{}'.format(subject, body)
+            )
+        
+        """
+        client = WebClient(token=os.environ.get('xoxb-2052224335318-2093229002599-SnGMmMB6iUbvRwf1YiAxiftK'))
+
+        channel_id = 'C022Z4HR9V4'
+
+        try:
+            result = client.chat_postMessage(
+                    channel=channel_id,
+                    text = 'testing'
+            )
+            
+            print(result)
+        except SlackApiError as e:
+            print(f"Error: {e}")
+
+        """
+        """
+        if request.form['subject'] and request.form['body']:
+            subject = request.form['subject']
+            body = request.form['body']
 
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.ehlo()
@@ -93,7 +129,7 @@ def question():
             recipients = ["avyukthnilajagi@gmail.com", "tanishka.mehta06@gmail.com"]
            
             for i in range(len(recipients)):
-                server.sendmail(sender, recipients[i], msg)
+                server.sendmail(sender, recipients[i], msg)"""
         
         return render_template('question.html')
 
