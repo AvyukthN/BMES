@@ -85,6 +85,7 @@ def question():
         if request.form['subject'] and request.form['body']:
             subject = request.form['subject']
             body = request.form['body']
+            email_address = request.form['email_addy']
             env_path = Path('.') / '.env'
             load_dotenv(dotenv_path=env_path)
 
@@ -92,7 +93,7 @@ def question():
 
             response = client.chat_postMessage(
                     channel = '#questions',
-                    text = '{}\n{}'.format(subject, body)
+                    text = '*From:* {}\n\n*{}*\n{}'.format(email_address, subject, body)
             )
         
         """

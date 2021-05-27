@@ -5,13 +5,15 @@
 
 <form style = 'margin-left: 5%; margin-top: 2%; margin-right: 5%;' method = "POST">
   <div class="form-group">
-    <label for="exampleInputEmail1">Email Subject</label>
-    <input type="text" name = "subject" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email subject">
+    <label for="exampleInputEmail1">Subject Of Interest</label>
+    <input type="text" name = "subject" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="What is your question about?">
   </div></br>
   <div class="form-group">
-    <label for="exampleInputPassword1">Body</label>
-    <input type="text" name = "body" class="form-control" id="exampleInputPassword1" placeholder="Enter your question">
-    <small id="emailHelp" class="form-text text-muted">All questions are anonymous.</small>
+    <label for="exampleInputPassword1">Question Summary</label>
+    <input type="text" name = "body" class="form-control" id="exampleInputPassword1" placeholder="Enter a short summary of your question"></br>
+    <label for="exampleInputPassword1">Your Email</label>
+    <input type="text" name = "email_addy" class="form-control" id="exampleInputPassword1" placeholder="Enter your email address">
+    <small id="emailHelp" class="form-text text-muted">All questions are anonymous. Your email will only be used to get back to you on any questions you may have!</small>
   </div></br>
   <button type="submit" class="btn btn-primary">Submit Question</button>
 </form>
