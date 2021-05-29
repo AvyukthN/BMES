@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import smtplib
-from credentials import creds
 from datetime import datetime
 import os
 from slack_sdk import WebClient
@@ -9,8 +8,11 @@ from slack_sdk.errors import SlackApiError
 from dotenv import load_dotenv
 import slack
 from pathlib import Path
+from forms import RegistrationForm, LoginForm
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "41bac753eacc4c643ab39faed589ae94"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
@@ -48,6 +50,30 @@ def home():
         
         return render_template('home.html')
         # emailer(name, subject, body)
+
+@app.route("/register", methods = ["GET", "POST"])
+def register():
+    form = RegistrationForm()
+
+    if form.validate_on_submit():
+        flash("Account created for {}!".format(form.username.data), 'success')
+        return redirect(url_for('home'))
+
+    return render_template('register.html', form=form)
+
+@app.route("/login", methods = ['GET', 'POST'])
+def login():
+    form = LoginForm()
+    
+    if form.validate_on_submit():
+        if form.email.data == 'avyukthnilajagi@gmail.com' and form.password.data == 'password':
+            flash('You have been logged in!', 'success')
+
+            return redirect(url_for('home'))
+        else:
+            flash('Login Unsuccessful. Please check your username and password', 'danger')
+    
+    return render_template('login.html', form=form)
 
 @app.route('/aboutus', methods=['GET'])
 def aboutUs():
